@@ -6,18 +6,18 @@ pub mod gfx {
     pub enum ColorPallete {
         Black,
         DarkBlue,
-        Magenta,
+        DarkPurple,
         DarkGreen,
-        Bronze,
-        Grey,
-        Silver,
-        OffWhite,
+        Brown,
+        DarkGray,
+        LightGray,
+        White,
         Red,
-        Gold,
+        Orange,
         Yellow,
         Green,
-        SkyBlue,
-        PalePurple,
+        Blue,
+        Indigo,
         Pink,
         Peach,
     }
@@ -27,23 +27,21 @@ pub mod gfx {
             match color {
                 0 => ColorPallete::Black,
                 1 => ColorPallete::DarkBlue,
-                2 => ColorPallete::Magenta,
+                2 => ColorPallete::DarkPurple,
                 3 => ColorPallete::DarkGreen,
-                4 => ColorPallete::Bronze,
-                5 => ColorPallete::Grey,
-                6 => ColorPallete::Silver,
-                7 => ColorPallete::OffWhite,
+                4 => ColorPallete::Brown,
+                5 => ColorPallete::DarkGray,
+                6 => ColorPallete::LightGray,
+                7 => ColorPallete::White,
                 8 => ColorPallete::Red,
-                9 => ColorPallete::Gold,
+                9 => ColorPallete::Orange,
                 10 => ColorPallete::Yellow,
                 11 => ColorPallete::Green,
-                12 => ColorPallete::SkyBlue,
-                13 => ColorPallete::PalePurple,
+                12 => ColorPallete::Blue,
+                13 => ColorPallete::Indigo,
                 14 => ColorPallete::Pink,
                 15 => ColorPallete::Peach,
-                _ => {
-                    printh(format!("Invalid color {}", color));
-                    panic!("Invalid color {}", color)},
+                _ => panic!("Invalid color {}", color),
             }
         }
     }
@@ -53,18 +51,18 @@ pub mod gfx {
             match color {
                 ColorPallete::Black => 0,
                 ColorPallete::DarkBlue => 1,
-                ColorPallete::Magenta => 2,
+                ColorPallete::DarkPurple => 2,
                 ColorPallete::DarkGreen => 3,
-                ColorPallete::Bronze => 4,
-                ColorPallete::Grey => 5,
-                ColorPallete::Silver => 6,
-                ColorPallete::OffWhite => 7,
+                ColorPallete::Brown => 4,
+                ColorPallete::DarkGray => 5,
+                ColorPallete::LightGray => 6,
+                ColorPallete::White => 7,
                 ColorPallete::Red => 8,
-                ColorPallete::Gold => 9,
+                ColorPallete::Orange => 9,
                 ColorPallete::Yellow => 10,
                 ColorPallete::Green => 11,
-                ColorPallete::SkyBlue => 12,
-                ColorPallete::PalePurple => 13,
+                ColorPallete::Blue => 12,
+                ColorPallete::Indigo => 13,
                 ColorPallete::Pink => 14,
                 ColorPallete::Peach => 15,
             }
@@ -72,6 +70,8 @@ pub mod gfx {
     }
 
     extern "C" {
+        #[link_name="cls"]
+        fn _cls(color: i32);
         #[link_name="rectfill"]
         fn _rectfill(x0: i32, y0: i32, x1: i32, y1: i32, color: i32);
         #[link_name="rect"]
@@ -84,6 +84,12 @@ pub mod gfx {
         fn _print(string: *const c_char, x: i32, y: i32, col: i32);
         #[link_name="printh"]
         fn _printh(string: *const c_char);
+    }
+
+    pub fn cls(color: ColorPallete) {
+        unsafe {
+            _cls(i32::from(color));
+        }
     }
     
     pub fn rectfill(x0: i32, y0: i32, x1: i32, y1: i32, color: ColorPallete) {
@@ -433,6 +439,180 @@ pub mod input {
             Scancode::from(_key())
         }
     }
+}
+
+pub mod math {
+    extern "C" {
+        #[link_name="abs"]
+        fn _abs(x: f32) -> i32;
+        #[link_name="atan2"]
+        fn _atan2(dx: f32, dy: f32) -> f32;
+        #[link_name="band"]
+        fn _band(x: i32, y: i32) -> i32;
+        #[link_name="bnot"]
+        fn _bnot(x: i32) -> i32;
+        #[link_name="bor"]
+        fn _bor(x: i32, y: i32) -> i32;
+        #[link_name="bxor"]
+        fn _bxor(x: i32, y: i32) -> i32;
+        #[link_name="cos"]
+        fn _cos(x: f32) -> f32;
+        #[link_name="flr"]
+        fn _flr(x: f32) -> f32;
+        #[link_name="min"]
+        fn _min(x: i32, y: i32) -> i32;
+        #[link_name="minf"]
+        fn _minf(x: f32, y: f32) -> f32;
+        #[link_name="max"]
+        fn _max(x: i32, y: i32) -> i32;
+        #[link_name="maxf"]
+        fn _maxf(x: f32, y: f32) -> f32;
+        #[link_name="mid"]
+        fn _mid(x: i32, y: i32, z: i32) -> i32;
+        #[link_name="rnd"]
+        fn _rnd(x: i32) -> i32;
+        #[link_name="srand"]
+        fn _srand(x: i32);
+        #[link_name="sgn"]
+        fn _sgn(x: i32) -> i32;
+        #[link_name="shl"]
+        fn _shl(x: i32, y: i32) -> i32;
+        #[link_name="shr"]
+        fn _shr(x: i32, y: i32) -> i32;
+        #[link_name="sin"]
+        fn _sin(x: f32) -> f32;
+        #[link_name="sqrt"]
+        fn _sqrt(x: i32) -> f32;
+        #[link_name="sqrtf"]
+        fn _sqrtf(x: f32) -> f32;
+    }
+
+    pub fn abs(x: f32) -> i32 {
+        unsafe {
+            _abs(x)
+        }
+    }
+
+    pub fn atan2(dx: f32, dy: f32) -> f32 {
+        unsafe {
+            _atan2(dx, dy)
+        }
+    }
+
+    pub fn band(x: i32, y: i32) -> i32 {
+        unsafe {
+            _band(x, y)
+        }
+    }
+
+    pub fn bnot(x: i32) -> i32 {
+        unsafe {
+            _bnot(x)
+        }
+    }
+
+    pub fn bor(x: i32, y: i32) -> i32 {
+        unsafe {
+            _bor(x, y)
+        }
+    }
+
+    pub fn bxor(x: i32, y: i32) -> i32 {
+        unsafe {
+            _bxor(x, y)
+        }
+    }
+
+    pub fn cos(x: f32) -> f32 {
+        unsafe {
+            _cos(x)
+        }
+    }
+
+    pub fn flr(x: f32) -> f32 {
+        unsafe {
+            _flr(x)
+        }
+    }
+
+    pub fn min(x: i32, y: i32) -> i32 {
+        unsafe {
+            _min(x, y)
+        }
+    }
+
+    pub fn minf(x: f32, y: f32) -> f32  {
+        unsafe {
+            _minf(x, y)
+        }
+    }
+
+    pub fn max(x: i32, y: i32) -> i32 {
+        unsafe {
+            _max(x, y)
+        }
+    }
+
+    pub fn maxf(x: f32, y: f32) -> f32 {
+        unsafe {
+            _maxf(x, y)
+        }
+    }
+
+    pub fn mid(x: i32, y: i32, z: i32) -> i32 {
+        unsafe {
+            _mid(x, y, z)
+        }
+    }
+
+    pub fn rnd(x: i32) -> i32 {
+        unsafe {
+            _rnd(x)
+        }
+    }
+
+    pub fn srand(x: i32) {
+        unsafe {
+            _srand(x);
+        }
+    }
+
+    pub fn sgn(x: i32) -> i32 {
+        unsafe {
+            _sgn(x)
+        }
+    }
+
+    pub fn shl(x: i32, y: i32) -> i32 {
+        unsafe {
+            _shl(x, y)
+        }
+    }
+
+    pub fn shr(x: i32, y: i32) -> i32 {
+        unsafe {
+            _shr(x, y)
+        }
+    }
+
+    pub fn sin(x: f32) -> f32 {
+        unsafe {
+            _sin(x)
+        }
+    }
+
+    pub fn sqrt(x: i32) -> f32 {
+        unsafe {
+            _sqrt(x)
+        }
+    }
+
+    pub fn sqrtf(x: f32) -> f32 {
+        unsafe {
+            _sqrtf(x)
+        }
+    }
+
 }
 
 pub mod misc {
