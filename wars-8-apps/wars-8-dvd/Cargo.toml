@@ -1,0 +1,13 @@
+[package]
+name = "wars_8_dvd"
+version = "0.1.0"
+authors = ["EliseZeroTwo <elise@headpat.services>"]
+edition = "2018"
+
+[lib]
+crate-type = ["cdylib"]
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+wars_8_api = { git = "https://github.com/EliseZeroTwo/WARS-8-API", branch = "main" }
+lazy_static = "1.4.0"
