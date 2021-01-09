@@ -25,9 +25,9 @@ pub fn _update() {
         x += dx;
         y += dy;
         
-        if x < 1 || x > 255 - (MSG.len() as i32 * 16) {
+        if x < 1 || x > 255 - (MSG.len() as i32 * 8) {
             dx *= -1
-        }  else if y < 1 || y > 255 - 16 {
+        }  else if y < 1 || y > 255 - 8 {
             dy *= -1
         }
     }

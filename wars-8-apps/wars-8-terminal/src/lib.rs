@@ -56,7 +56,7 @@ pub fn _update() {
             last.1.pop();
             *(lines_mutex.last_mut().unwrap()) = (last.0, last.1);
             *crs_offset -= 1;
-        } else if *crs_offset != 16 {
+        } else if *crs_offset != 32 {
             *(lines_mutex.last_mut().unwrap()) = (last.0, last.1 + char::from(key).to_string().as_str());
             *crs_offset += 1;
         }
@@ -69,8 +69,8 @@ pub fn _update() {
         key = input::key();
     }
     let lines_len = lines_mutex.len();
-    if lines_len > 16 {
-        for _ in 0..(lines_len - 16) {
+    if lines_len > 32 {
+        for _ in 0..(lines_len - 32) {
             lines_mutex.remove(0);
         }
     }
@@ -83,7 +83,7 @@ pub fn _draw() {
     let lines_len = lines_mutex.len();
 
     for row in 0..lines_len {
-        let y = 256 - (16 * (row + 1));
+        let y = 256 - (8 * (row + 1));
         let row_content = lines_mutex[(lines_len - 1) - row].clone();
         print(row_content.1, 0, y as i32, row_content.0);
     }
