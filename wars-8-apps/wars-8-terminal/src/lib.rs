@@ -27,7 +27,7 @@ pub fn process_command(mutex: &mut MutexGuard<Vec<(ColorPallete, String)>>) {
         "echo" => {
             match cmd_str.find(' ') {
                 Some(idx) => {
-                    mutex.push((ColorPallete::OffWhite, cmd_str[idx..].to_string()));
+                    mutex.push((ColorPallete::White, cmd_str[(idx + 1)..].to_string()));
                 },
                 None => { }
             }
@@ -36,7 +36,19 @@ pub fn process_command(mutex: &mut MutexGuard<Vec<(ColorPallete, String)>>) {
             misc::exit();
         },
         "help" => {
-            mutex.push((ColorPallete::SkyBlue, "help echo exit".to_string()));
+            mutex.push((ColorPallete::Blue, "help echo exit".to_string()));
+            mutex.push((ColorPallete::Pink, "load unload".to_string()));
+        },
+        "load" => {
+            match cmd_str.find(' ') {
+                Some(idx) => {
+                    misc::load(cmd_str[(idx + 1)..].to_string());
+                },
+                None => { }
+            }
+        },
+        "unload" => {
+            misc::unload();
         },
         _ => {
             mutex.push((ColorPallete::Red, "INVALID COMMAND".to_string()));
@@ -56,7 +68,7 @@ pub fn _update() {
             last.1.pop();
             *(lines_mutex.last_mut().unwrap()) = (last.0, last.1);
             *crs_offset -= 1;
-        } else if *crs_offset != 32 {
+        } else if *crs_offset != 32 && key != input::Scancode::RETURN {
             *(lines_mutex.last_mut().unwrap()) = (last.0, last.1 + char::from(key).to_string().as_str());
             *crs_offset += 1;
         }

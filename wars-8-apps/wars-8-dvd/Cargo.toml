@@ -9,5 +9,5 @@ crate-type = ["cdylib"]
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
-wars_8_api = { git = "https://github.com/EliseZeroTwo/WARS-8-API", branch = "main" }
+wars_8_api = { path = "../../" }
 lazy_static = "1.4.0"

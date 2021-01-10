@@ -10,4 +10,4 @@ crate-type = ["cdylib"]
 
 [dependencies]
 lazy_static = "1.4.0"
-wars_8_api = { git = "https://github.com/EliseZeroTwo/WARS-8-API", branch = "main" }
+wars_8_api = { path = "../../" }

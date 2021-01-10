@@ -45,35 +45,35 @@ pub fn draw_lgbt() {
     let mut y = 0;
     rectfill(0, y, 255, y + 42, ColorPallete::Red);
     y += 42;
-    rectfill(0, y, 255, y + 42, ColorPallete::Gold);
+    rectfill(0, y, 255, y + 42, ColorPallete::Orange);
     y += 42;
     rectfill(0, y, 255, y + 42, ColorPallete::Yellow);
     y += 42;
     rectfill(0, y, 255, y + 42, ColorPallete::Green);
     y += 42;
-    rectfill(0, y, 255, y + 42, ColorPallete::SkyBlue);
+    rectfill(0, y, 255, y + 42, ColorPallete::Blue);
     y += 42;
-    rectfill(0, y, 255, 255, ColorPallete::Magenta);
+    rectfill(0, y, 255, 255, ColorPallete::DarkPurple);
 }
 
 pub fn draw_trans() {
     let mut y = 0;
-    rectfill(0, y, 255, y + 51, ColorPallete::SkyBlue);
+    rectfill(0, y, 255, y + 51, ColorPallete::Blue);
     y += 51;
     rectfill(0, y, 255, y + 51, ColorPallete::Pink);
     y += 51;
-    rectfill(0, y, 255, y + 52, ColorPallete::OffWhite);
+    rectfill(0, y, 255, y + 52, ColorPallete::White);
     y += 52;
     rectfill(0, y, 255, y + 51, ColorPallete::Pink);
     y += 42;
-    rectfill(0, y, 255, 255, ColorPallete::SkyBlue);
+    rectfill(0, y, 255, 255, ColorPallete::Blue);
 }
 
 pub fn draw_bi() {
     let mut y = 0;
-    rectfill(0, y, 255, y + 95, ColorPallete::Magenta);
+    rectfill(0, y, 255, y + 95, ColorPallete::DarkPurple);
     y += 95;
-    rectfill(0, y, 255, y + 65, ColorPallete::PalePurple);
+    rectfill(0, y, 255, y + 65, ColorPallete::Indigo);
     y += 65;
     rectfill(0, y, 255, y + 95, ColorPallete::DarkBlue);
 }

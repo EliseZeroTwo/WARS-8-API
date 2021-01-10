@@ -616,14 +616,43 @@ pub mod math {
 }
 
 pub mod misc {
+    use std::{ffi::CString, os::raw::c_char};
+
     extern "C" {
         #[link_name="exit"]
         fn _exit() -> !;
+        #[link_name="save"]
+        fn _save() -> i32;
+        #[link_name="unload"]
+        fn _unload();
+        #[link_name="load"]
+        fn _load(string: *const c_char);
     }
 
     pub fn exit() -> ! {
         unsafe {
             _exit();
+        }
+    }
+
+    pub fn save() -> bool {
+        unsafe {
+            _save() != 0
+        }
+    }
+
+    pub fn unload() {
+        unsafe {
+            _unload();
+        }
+    }
+
+    pub fn load(local_cart_path: String) {
+        let cstring = CString::new(local_cart_path).unwrap();
+        unsafe {
+            let ptr = cstring.into_raw();
+            _load(ptr);
+            CString::from_raw(ptr);
         }
     }
 }
