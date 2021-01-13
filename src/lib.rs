@@ -407,8 +407,8 @@ pub mod input {
     impl From<Player> for i32 {
         fn from(player: Player) -> Self {
             match player {
-                Player::One => 1,
-                Player::Two => 2,
+                Player::One => 0,
+                Player::Two => 1,
             }
         }
     }

@@ -81,8 +81,8 @@ pub fn _update() {
         key = input::key();
     }
     let lines_len = lines_mutex.len();
-    if lines_len > 32 {
-        for _ in 0..(lines_len - 32) {
+    if lines_len > 21 {
+        for _ in 0..(lines_len - 21) {
             lines_mutex.remove(0);
         }
     }
@@ -90,12 +90,12 @@ pub fn _update() {
 
 #[no_mangle]
 pub fn _draw() {
-    rectfill(0, 0, 255, 255, ColorPallete::Black);
+    rectfill(0, 0, 127, 127, ColorPallete::Black);
     let lines_mutex = LINES.lock().unwrap();
     let lines_len = lines_mutex.len();
 
     for row in 0..lines_len {
-        let y = 256 - (8 * (row + 1));
+        let y = 127 - (6 * row) - 1;
         let row_content = lines_mutex[(lines_len - 1) - row].clone();
         print(row_content.1, 0, y as i32, row_content.0);
     }
